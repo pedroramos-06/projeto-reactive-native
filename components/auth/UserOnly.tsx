@@ -4,7 +4,13 @@ import { useEffect } from "react"
 
 import ThemedLoader from "../ThemedLoader"
 
-const UserOnly = ({ children }) => {
+import type { ReactNode } from "react"
+
+interface UserOnlyProps {
+  children: ReactNode
+}
+
+const UserOnly = ({ children }: UserOnlyProps) => {
   const { user, authChecked} = useUser()
   const router = useRouter()
 

@@ -3,7 +3,13 @@ import { useUser } from "../../hooks/useUser"
 import { useEffect } from "react"
 import ThemedLoader from "../ThemedLoader"
 
-const GuestOnly = ({ children }) => {
+import type { ReactNode } from "react"
+
+interface GuestOnlyProps {
+  children: ReactNode
+}
+
+const GuestOnly = ({ children }: GuestOnlyProps) => {
   const { user, authChecked} = useUser()
   const router = useRouter()
 

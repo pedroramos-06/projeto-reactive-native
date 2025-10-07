@@ -11,23 +11,33 @@ import ThemedButton from "../../../components/ThemedButton";
 import ThemedLoader from "../../../components/ThemedLoader";
 import { Colors } from '../../../constants/Colors';
 
+import type { Book } from '../../../contexts/BooksContext'; 
+
 const BookDetails = () => {
-  const[book, setBook] = useState(null);
+  const[book, setBook] = useState<Book | null>(null);
 
   const { id } = useLocalSearchParams();
   const { fetchBookById, deleteBook } = useBooks();
   const router = useRouter()
 
   const handleDelete = async () => {
-    await deleteBook(id);
-    setBook(null);
-    router.replace('/books');
+    if (typeof id === 'string') {
+      await deleteBook(id);
+      setBook(null);
+      router.replace('/books');
+    } else {
+      console.error("Erro: O ID do livro não é uma string válida.");
+    }
   }
 
   useEffect(() => {
     async function loadBook() {
-      const bookData = await fetchBookById(id)
-      setBook(bookData)
+      if (typeof id === 'string') {
+        const bookData = await fetchBookById(id);
+        if (bookData) {
+          setBook(bookData as Book);
+        }
+      }
     }
 
     loadBook()

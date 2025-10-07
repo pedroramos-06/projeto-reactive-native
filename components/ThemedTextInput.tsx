@@ -1,9 +1,15 @@
 import { TextInput, useColorScheme } from 'react-native'
 import { Colors } from '../constants/Colors'
 
-const ThemedTextInput = ({ style, ...props }) => {
+import type { TextInputProps, StyleProp, TextStyle } from 'react-native'
+
+interface ThemedTextInputProps extends TextInputProps {
+  style?: StyleProp<TextStyle>
+}
+
+const ThemedTextInput = ({ style, ...props }: ThemedTextInputProps) => {
   const colorScheme = useColorScheme()
-  const theme = Colors[colorScheme] ?? Colors.light
+  const theme = Colors[colorScheme ?? 'light']
 
   return (
     <TextInput 
@@ -16,7 +22,7 @@ const ThemedTextInput = ({ style, ...props }) => {
         },
         style
       ]}
-          placeholderTextColor="gray"
+      placeholderTextColor="gray"
       {...props}
     />
   )

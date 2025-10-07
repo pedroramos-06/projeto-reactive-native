@@ -2,9 +2,16 @@ import { View, useColorScheme } from 'react-native'
 import { Colors } from '../constants/Colors'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const ThemedView = ({style, safe=false, ...props}) => {
+import type { ViewProps, StyleProp, ViewStyle } from 'react-native';
+
+interface ThemedViewProps extends ViewProps {
+  style?: StyleProp<ViewStyle>
+  safe?: boolean
+}
+
+const ThemedView = ({style, safe=false, ...props}: ThemedViewProps) => {
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors[colorScheme ?? 'light'];
 
   if(!safe) return (
     <View 

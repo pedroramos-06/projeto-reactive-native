@@ -5,9 +5,15 @@ import ThemedText from "../../components/ThemedText"
 import ThemedView from "../../components/ThemedView"
 import { useUser } from '../../hooks/useUser'
 import ThemedButton from '../../components/ThemedButton'
+import ThemedLoader from '../../components/ThemedLoader'
 
 const Profile = () => {
   const { user, logout } = useUser()
+
+  if (!user) {
+    return <ThemedLoader />;
+  }
+  
   return (
     <ThemedView style={styles.container}>
 

@@ -7,13 +7,13 @@ import { BooksProvider } from "../contexts/BooksContext";
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors[colorScheme ?? 'light'];
 
 
   return (
     <UserProvider>
       <BooksProvider>
-        <StatusBar value="auto" />
+        <StatusBar style="auto" />
         <Stack
           screenOptions={{
             headerStyle: { backgroundColor: theme.navBackground },

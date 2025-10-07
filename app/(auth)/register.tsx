@@ -1,8 +1,8 @@
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
 import { Link } from 'expo-router'
-import { Colors } from '../../constants/Colors'
 import { useState } from 'react'
 import { useUser } from '../../hooks/useUser'
+import { Colors } from '../../constants/Colors'
 
 import Spacer from '../../components/Spacer'
 import ThemedView from '../../components/ThemedView'
@@ -10,23 +10,22 @@ import ThemedText from '../../components/ThemedText'
 import ThemedButton from '../../components/ThemedButton'
 import ThemedTextInput from '../../components/ThemedTextInput'
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
-  const { login } = useUser()
+  const { register } = useUser()
 
   const handleSubmit = async () => {
     setError(null)
 
     try{
-      await login(email, password)
+      await register(email, password)
     } catch (error) {
-      setError(error.message)
+      setError((error as Error).message)
     }
   }
-  
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -34,12 +33,13 @@ const Login = () => {
         <Spacer/>
 
         <ThemedText title={true} style={styles.title}>
-          Login to Your account
+          Register for an account
         </ThemedText>
 
         <ThemedTextInput 
           style={{ width: '80%', marginBottom: 20}}
           placeholder='Email'
+          placeholderTextColor='gray'
           keyboardType='email-address'
           onChangeText={setEmail}
           value={email}
@@ -48,22 +48,23 @@ const Login = () => {
         <ThemedTextInput 
           style={{ width: '80%', marginBottom: 20}}
           placeholder='Password'
+          placeholderTextColor='gray'
           onChangeText={setPassword}
           value={password}
           secureTextEntry
         />
 
         <ThemedButton onPress={handleSubmit}>
-          <Text style ={{color: '#f2f2f2'}}>Login</Text>
+          <Text style ={{color: '#f2f2f2'}}>Register</Text>
         </ThemedButton>
         <Spacer />
 
         {error && <Text style={styles.error}>{error}</Text>}
         <Spacer height={100} />
 
-        <Link href='/register'>
+        <Link href='/login'>
           <ThemedText style={{ textAlign: 'center'}}>
-            Register instead
+            Login instead
           </ThemedText>
         </Link>
 
@@ -72,7 +73,7 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({
   container: {
@@ -86,21 +87,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 30
   },
-  btn: {
-    backgroundColor: Colors.primary,
-    padding: 15,
-    borderRadius: 5,
-  },
-  pressed: {
-    opacity: 0.8
-  },
   error: {
-    color: Colors.warning,
-    padding: 10,
-    backgroundColor: '#f5c1c8',
-    borderColor: Colors.warning,
-    borderWidth: 1,
-    borderRadius: 6,
-    marginHorizontal: 10,
+      color: Colors.warning,
+      padding: 10,
+      backgroundColor: '#f5c1c8',
+      borderColor: Colors.warning,
+      borderWidth: 1,
+      borderRadius: 6,
+      marginHorizontal: 10,
   }
 })

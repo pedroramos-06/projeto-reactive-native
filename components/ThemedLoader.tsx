@@ -4,7 +4,7 @@ import ThemedView from "./ThemedView";
 
 const ThemedLoader = () => {
   const colorScheme = useColorScheme()
-  const theme = Colors[colorScheme] ?? Colors.light
+  const theme = Colors[colorScheme ?? 'light'] 
 
   return (
     <ThemedView style={{
